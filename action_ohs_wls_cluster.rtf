@@ -1,0 +1,133 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 LucidaGrande;\f2\fswiss\fcharset0 ArialMT;
+}
+{\colortbl;\red255\green255\blue255;\red255\green0\blue0;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 Internal - 94 \
+\
+   <listen-port>14990</listen-port>\
+\
+    <listen-port>24910</listen-port>\
+\
+external - 94\
+\
+ <listen-port>34909</listen-port>\
+ <listen-port>34908</listen-port>\
+\
+\
+\
+\
+\
+ <cookie-name>ihub-ept-PORTAL-PSJSESSIONID</cookie-name>\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+{\field{\*\fldinst{HYPERLINK "https://ihub-pt-dmz.ascensionhealth.org/psp/SASCNP/EMPLOYEE/EMPL/h/?tab=DEFAULT"}}{\fldrslt \cf0 https://ihub-pt-dmz.ascensionhealth.org/psp/SASCNP/EMPLOYEE/EMPL/h/?tab=DEFAULT}}\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f1\fs26 \cf0 kvenukri
+\fs24 \cf2 \
+
+\fs26 \cf0 Welcome1
+\fs24 \cf2 \
+
+\fs26 \cf0 will change my pwd later
+\f0\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+\
+\pard\pardeftab720
+
+\f2\fs22 \cf0 \cb3 SR 3-11078949831: Request for current BigIP rule details for iHub
+\f0\fs24 \cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+\pard\pardeftab720
+
+\f2\fs22 \cf0 \cb3 Changes to mod_wls.conf for clustering:\cb1 \
+\
+\
+\cb3 1. WebLogic Plugin Enabled must be set to true (WLS Console) - requires restart.\cb1 \
+\
+\cb3 2. Added WLCookieName ihub-ept-PORTAL-PSJSESSIONID and second WLS server:port to mod_wls.conf (below)\cb1 \
+\
+\
+\cb3 $ cat mod_wl_ohs.conf\cb1 \
+\cb3 # NOTE : This is a template to configure mod_weblogic.\cb1 \
+\
+\cb3 LoadModule weblogic_module \'a0 "$\{ORACLE_HOME\}/ohs/modules/mod_wl_ohs.so"\cb1 \
+\cb3 ProxyPreserveHost On\cb1 \
+\cb3 WLProxySSL ON\cb1 \
+\cb3 WLProxySSLPassThrough ON\cb1 \
+\cb3 # This empty block is needed to save mod_wl related configuration from EM to this file when changes are made at the Base Virtual Host Level\cb1 \
+\cb3 <IfModule weblogic_module>\cb1 \
+\cb3 # \'a0 \'a0 \'a0WebLogicHost <WEBLOGIC_HOST>\cb1 \
+\cb3 # \'a0 \'a0 \'a0WebLogicPort <WEBLOGIC_PORT>\cb1 \
+\cb3 # \'a0 \'a0 \'a0Debug ON\cb1 \
+\cb3 # \'a0 \'a0 \'a0WLLogFile /tmp/weblogic.log\cb1 \
+\cb3 # \'a0 \'a0 \'a0MatchExpression *.jsp\cb1 \
+\cb3 </IfModule>\cb1 \
+\
+\cb3 # <Location /weblogic>\cb1 \
+\cb3 # \'a0 \'a0 \'a0SetHandler weblogic-handler\cb1 \
+\cb3 # \'a0 \'a0 \'a0PathTrim /weblogic\cb1 \
+\cb3 # \'a0 \'a0 \'a0ErrorPage \'a0http:/WEBLOGIC_HOME:WEBLOGIC_PORT/\cb1 \
+\cb3 # \'a0</Location>\cb1 \
+\cb3 <Location /psp>\cb1 \
+\cb3 WebLogicCluster vmpodascn094.oracleoutsourcing.com:34910,vmpodascn094.oracleoutsourcing.com:34911\cb1 \
+\cb3 SetHandler weblogic-handler\cb1 \
+\cb3 WLCookieName ihub-ept-PORTAL-PSJSESSIONID\cb1 \
+\cb3 #WLProxySSL ON\cb1 \
+\cb3 </Location>\cb1 \
+\
+\cb3 <Location /pspc>\cb1 \
+\cb3 WebLogicCluster vmpodascn094.oracleoutsourcing.com:34910,vmpodascn094.oracleoutsourcing.com:34911\cb1 \
+\cb3 SetHandler weblogic-handler\cb1 \
+\cb3 WLCookieName ihub-ept-PORTAL-PSJSESSIONID\cb1 \
+\cb3 #WLProxySSL ON\cb1 \
+\cb3 </Location>\cb1 \
+\
+\cb3 <Location /psc>\cb1 \
+\cb3 WebLogicCluster vmpodascn094.oracleoutsourcing.com:34910,vmpodascn094.oracleoutsourcing.com:34911\cb1 \
+\cb3 SetHandler weblogic-handler\cb1 \
+\cb3 WLCookieName ihub-ept-PORTAL-PSJSESSIONID\cb1 \
+\cb3 #WLProxySSL ON\cb1 \
+\cb3 </Location>\cb1 \
+\
+\cb3 <Location /SASCNP>\cb1 \
+\cb3 WebLogicCluster vmpodascn094.oracleoutsourcing.com:34910,vmpodascn094.oracleoutsourcing.com:34911\cb1 \
+\cb3 SetHandler weblogic-handler\cb1 \
+\cb3 WLCookieName ihub-ept-PORTAL-PSJSESSIONID\cb1 \
+\cb3 #WLProxySSL ON\cb1 \
+\cb3 </Location>\cb1 \
+\
+\cb3 <Location /cs>\cb1 \
+\cb3 WebLogicCluster vmpodascn094.oracleoutsourcing.com:34910,vmpodascn094.oracleoutsourcing.com:34911\cb1 \
+\cb3 SetHandler weblogic-handler\cb1 \
+\cb3 WLCookieName ihub-ept-PORTAL-PSJSESSIONID\cb1 \
+\cb3 #WLProxySSL ON\cb1 \
+\cb3 </Location>\cb1 \
+\
+\cb3 <Location /PSIGW>\cb1 \
+\cb3 WebLogicCluster vmpodascn094.oracleoutsourcing.com:34910,vmpodascn094.oracleoutsourcing.com:34911\cb1 \
+\cb3 SetHandler weblogic-handler\cb1 \
+\cb3 WLCookieName ihub-ept-PORTAL-PSJSESSIONID\cb1 \
+\cb3 #WLProxySSL ON\cb1 \
+\cb3 </Location>\cb1 \
+\
+\cb3 <Location /psreports>\cb1 \
+\cb3 WebLogicCluster vmpodascn094.oracleoutsourcing.com:34910,vmpodascn094.oracleoutsourcing.com:34911\cb1 \
+\cb3 SetHandler weblogic-handler\cb1 \
+\cb3 WLCookieName ihub-ept-PORTAL-PSJSESSIONID\cb1 \
+\cb3 #WLProxySSL ON\cb1 \
+\cb3 </Location>\cb1 \
+\
+\cb3 <Location /intrasee>\cb1 \
+\cb3 WebLogicCluster vmpodascn094.oracleoutsourcing.com:34910,vmpodascn094.oracleoutsourcing.com:34911\cb1 \
+\cb3 SetHandler weblogic-handler\cb1 \
+\cb3 WLCookieName ihub-ept-PORTAL-PSJSESSIONID\cb1 \
+\cb3 #WLProxySSL ON\cb1 \
+\cb3 </Location>}
